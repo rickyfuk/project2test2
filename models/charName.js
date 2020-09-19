@@ -10,7 +10,7 @@ module.exports = function (sequelize, DataTypes) {
 				isAlphanumeric: true,
 				unique: true,
 				validate: {
-					len: [2, 50],
+					len: [1, 50],
 				},
 			},
 			// gender: {
@@ -21,9 +21,9 @@ module.exports = function (sequelize, DataTypes) {
 			deleted_at: { type: DataTypes.DATE },
 		},
 		{
-			// freezeTableName: true,
-			// 	underscored: true,
-			// 	paranold: true,
+			freezeTableName: true,
+			// underscored: true,
+			paranoid: true,
 		}
 	);
 

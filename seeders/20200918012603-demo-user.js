@@ -438,7 +438,8 @@ module.exports = {
 				updatedAt: date,
 			});
 		}
-		await queryInterface.bulkInsert('charnames', inputarray, {
+
+		await queryInterface.bulkInsert('charname', inputarray, {
 			validate: true,
 			ignoreDuplicates: true,
 		});
