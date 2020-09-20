@@ -1,8 +1,1 @@
 node_modules/
-
-Question for Dane:
-1. for config/config.json:
-Do i need to take out the test and production part?
-
-2. controllers
-Do we still need the controllers folder when we use sequlize?
