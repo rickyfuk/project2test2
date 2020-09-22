@@ -16,12 +16,30 @@ app.use(express.json());
 // Static directory
 app.use(express.static('public'));
 
-// Set the route
-const htmlRoute = require('../project2test2/routes/htmlRoutes');
-const apiRoute = require('../project2test2/routes/apiRoutes');
+// Set Handlebars.
+var exphbs = require('express-handlebars');
 
-// app.use('/api', apiRoute);
-// app.use('/', htmlRoute);
+app.engine('handlebars', exphbs({ defaultLayout: 'main' }));
+app.set('view engine', 'handlebars');
+
+// Set the route
+
+const authRoute = require('../dnd-buddy-2.0/user');
+app.use('/', authRoute);
+
+// done route part 1 (might need to move to user.js)
+
+// const htmlRoute = require('../dnd-buddy-2.0/controllers/htmlRoute');
+// // const apiRoute = require('../dnd-buddy-2.0/controllers/apiRoute');
+
+// // app.use('/api', apiRoute);
+// app.use('/main', htmlRoute);
+
+// app.get('/', function (req, res) {
+// 	res.render('index');
+// });
+
+// end of route part 1
 
 // sync the sequelize model
 db.sequelize.sync({ force: true }).then(function () {
