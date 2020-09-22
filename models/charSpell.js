@@ -1,8 +1,15 @@
 'use strict';
+// This charSpell.js server for:
+//  1. define the setup of the table in the database
+//  2. define the type and set the restriction for all the variable under charSpell
+//  3. define the forgine key relationship (if any)
+//  4. export the charSpell table to the database
 
 module.exports = function (sequelize, DataTypes) {
-	const charSpell = sequelize.define(
-		'charSpell',
+	const CharSpell = sequelize.define(
+		// the following 'charSpell' define the table name
+		'CharSpell',
+		// the following object define the element inside this table
 		{
 			name: {
 				type: DataTypes.STRING,
@@ -38,24 +45,34 @@ module.exports = function (sequelize, DataTypes) {
 			// deleted_at: { type: DataTypes.DATE },
 		},
 		{
+			// this is the option for the table setup
+			// 1. freeze the table name (will not go to plurual)
 			freezeTableName: true,
-			// underscored: true,
+			// 2. underscore between two words for the column (i.e. updateAt will change to update_at)
+			underscored: true,
+			// 3. the data will not remove from the database (need to define what should be deleted)
 			paranoid: true,
 		}
 	);
 
-	charSpell.associate = function (models) {
-		// We're saying that a charSpell should belong to an Author
-		// A charSpell can't be created without an Author due to the foreign key constraint
-		// charSpell.belongsTo(models.mainDatabase, {
-		//   foreignKey: {
-		//     allowNull: true
-		//   }
-		// });
-		charSpell.hasMany(models.mainDatabase, {
+	// foreign key setup
+	// 1. maindatabase and spell - (many to many relationship)
+	// please alert when putting in the data from frontend
+	// the data goes to main_spell table
+	CharSpell.associate = function (models) {
+		CharSpell.belongsToMany(models.MainDatabase, {
 			onDelete: 'cascade',
+			through: 'Main_spell',
 		});
 	};
+	// old
 
-	return charSpell;
+	// old code
+	// CharSpell.associate = function (models) {
+	// 	CharSpell.hasMany(models.MainDatabase, {
+	// 		onDelete: 'cascade',
+	// 	});
+	// };
+
+	return CharSpell;
 };

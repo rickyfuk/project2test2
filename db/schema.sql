@@ -1,2 +1,5 @@
--- create the database from the schema for the mysql database
+-- Drops the dndbuddy if it exists currently --
+DROP DATABASE IF EXISTS dndbuddy;
+-- Creates the "dndbuddy" database --
+CREATE DATABASE dndbuddy;
 
