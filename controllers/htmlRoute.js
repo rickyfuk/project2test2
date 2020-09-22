@@ -9,7 +9,7 @@ const express = require('express');
 const router = express.Router();
 
 // Import the model (index.js) to use its database functions.
-// const db = require('../models');
+const db = require('../models');
 
 // Routes
 // =============================================================
