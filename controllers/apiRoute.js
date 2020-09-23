@@ -49,7 +49,7 @@ router.get('/logout', function (req, res) {
 });
 
 // Route for getting some data about our user to be used in frontend
-router.get('/api/user_data', function (req, res) {
+router.get('/api/user', function (req, res) {
 	if (!req.user) {
 		// The user is not logged in, send back an empty object
 		res.json({});
@@ -63,4 +63,36 @@ router.get('/api/user_data', function (req, res) {
 	}
 });
 
+router.get('/api/charname', function (req, res) {
+	db.CharName.findAll({})
+		.then(function (charNameFullList) {
+			res.json(charNameFullList);
+		})
+		.catch(function (err) {
+			res.status(500).json(err);
+		});
+});
+
+router.get('/api/charnameone', async function (req, res) {
+	// find the max row number from the charname table
+	const charNameTotal = await db.CharName.count({});
+	// res.json for showing the result into the browser (commant it our because it can only show once in one get call)
+	// res.json(charNameTotal);
+	// console log the result
+	console.log(charNameTotal);
+	const charRandomNum = Math.floor(Math.random() * charNameTotal + 1);
+	await db.CharName.findOne({
+		where: { id: charRandomNum },
+	})
+		.then(function (charNameResult) {
+			res.json(charNameResult);
+		})
+		.catch(function (err) {
+			res.status(500).json(err);
+		});
+	// function for solely get the respone to json (reference only)
+	// db.CharName.count({}).then(function (charNameCount) {
+	// 	res.json(charNameCount);
+	// });
+});
 module.exports = router;
